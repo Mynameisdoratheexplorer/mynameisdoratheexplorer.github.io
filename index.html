@@ -3,72 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Leaf Buttons</title>
+    <title>Erhama’s Diary! xo</title>
     <style>
         body {
             margin: 0;
             height: 100vh;
-            background-image: url('https://raw.githubusercontent.com/Mynameisdoratheexplorer/mynameisdoratheeexplorer.github.io/main/IMG_1055.jpeg?token=GHSAT0AAAAAACXR6HJF6NDSYFJOC3T2A6LYZXH72DQ');
+            background-image: url('https://raw.githubusercontent.com/Mynameisdoratheexplorer/mynameisdoratheexplorer.github.io/main/IMG_1056.jpeg');
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            font-family: Arial, sans-serif;
         }
 
-        .leaf-button {
-            display: inline-block;
-            background-color: #4CAF50; /* Green */
-            border: none;
+        h1 {
             color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .button {
+            display: inline-block;
+            background-color: white; /* Button color */
+            color: black; /* Text color */
             text-align: center;
             text-decoration: none;
-            padding: 20px;
+            padding: 15px 25px;
             margin: 10px;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            position: relative;
-            transition: transform 0.2s;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .leaf-button:hover {
-            transform: scale(1.1);
-        }
-
-        .leaf-button:after, .leaf-button:before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: inherit;
-            border-radius: 50%;
-        }
-
-        .leaf-button:before {
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .leaf-button:after {
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .button-link {
-            text-decoration: none;
-            color: white;
+        .button:hover {
+            background-color: #f0f0f0; /* Light grey on hover */
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <a href="https://www.tiktok.com/" class="leaf-button">
-        <span class="button-link">TikTok</span>
-    </a>
+    <h1>Erhama’s Diary! xo</h1>
+    <a href="#" class="button">Erhama Is the best</a>
+    <a href="#" class="button">Also obaid</a>
+    <a href="#" class="button">MR BEAN IS SO FATTY</a>
 </body>
 </html>
