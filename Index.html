@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Leaf Buttons</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://raw.githubusercontent.com/Mynameisdoratheexplorer/mynameisdoratheeexplorer.github.io/main/IMG_1055.jpeg?token=GHSAT0AAAAAACXR6HJF6NDSYFJOC3T2A6LYZXH72DQ');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .leaf-button {
+            display: inline-block;
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .leaf-button:hover {
+            transform: scale(1.1);
+        }
+
+        .leaf-button:after, .leaf-button:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .leaf-button:before {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .leaf-button:after {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .button-link {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://www.tiktok.com/" class="leaf-button">
+        <span class="button-link">TikTok</span>
+    </a>
+</body>
+</html>
