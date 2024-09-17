@@ -3,70 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duck Duck Clicker</title>
+    <title>Simple Clicker Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
             text-align: center;
-            background-color: #e0f7fa;
-            color: #00796b;
-        }
-        #duck {
-            width: 100px;
-            cursor: pointer;
+            padding: 50px;
         }
         h1 {
-            font-size: 2em;
-            color: #004d40;
+            color: #333;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
         }
         #score {
-            font-size: 1.5em;
-        }
-        #upgrade-button {
-            margin-top: 20px;
-            padding: 10px;
-            font-size: 1em;
+            font-size: 50px;
+            color: #007bff;
         }
     </style>
 </head>
 <body>
+
     <h1>Duck Duck Clicker</h1>
-    <div>
-        <img id="duck" src="https://img.icons8.com/color/96/000000/duck.png" alt="Duck">
-    </div>
-    <div id="score">Score: 0</div>
-    <button id="upgrade-button">Buy Quack Upgrade (Cost: 10 points)</button>
+    <div id="score">0</div>
+    <button id="clickButton">Click Me!</button>
+    <br>
+    <button onclick="window.location.href='https://www.youtube.com/YOUTUBE'">Watch Video</button>
 
     <script>
         let score = 0;
-        let quacksPerClick = 1;
-        let upgradeCost = 10;
 
-        // Update score display
-        function updateScore() {
-            document.getElementById('score').textContent = `Score: ${score}`;
-        }
-
-        // Handle duck click
-        document.getElementById('duck').addEventListener('click', () => {
-            score += quacksPerClick;
-            updateScore();
+        document.getElementById('clickButton').addEventListener('click', function() {
+            score++;
+            document.getElementById('score').innerText = score;
         });
-
-        // Handle upgrade button click
-        document.getElementById('upgrade-button').addEventListener('click', () => {
-            if (score >= upgradeCost) {
-                score -= upgradeCost;
-                quacksPerClick++;
-                upgradeCost = Math.floor(upgradeCost * 1.5);
-                document.getElementById('upgrade-button').textContent = `Buy Quack Upgrade (Cost: ${upgradeCost} points)`;
-                updateScore();
-            } else {
-                alert("Not enough points for upgrade!");
-            }
-        });
-
-        updateScore();
     </script>
+
 </body>
 </html>
