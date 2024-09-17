@@ -3,93 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clicker Game</title>
+    <title>Simple Car Rush Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            margin: 0;
+            overflow: hidden;
+            background-color: #87CEEB;
+        }
+        #gameCanvas {
+            border: 2px solid #000;
+            display: block;
+            margin: 20px auto;
+            background: url('https://example.com/road-background.jpg') no-repeat center center; /* Add your road image */
+            background-size: cover;
+        }
+        #controls {
             text-align: center;
-            color: #333;
-            padding: 20px;
+            margin-top: 10px;
         }
         button {
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 10px;
             margin: 5px;
-            border: none;
-            border-radius: 5px;
-            background-color: #4caf50;
-            color: white;
+            font-size: 16px;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        #upgradeShop {
-            margin-top: 20px;
+        #gameOver {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            color: red;
         }
     </style>
 </head>
 <body>
-    <h1>Duck Duck Clicker!</h1>
-    <div>
-        <h2 id="buttonCount">Buttons: 0</h2>
-        <button id="clickButton">Click me!</button>
-        <button onclick="window.location.href='https://www.youtube.com/YOUTUBE'">Go to YouTube</button>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <div id="controls">
+        <button id="gasButton">Gas</button>
+        <button id="brakeButton">Brake</button>
+        <button id="leftButton">Left</button>
+        <button id="rightButton">Right</button>
     </div>
-
-    <div id="upgradeShop">
-        <h2>Upgrade Shop</h2>
-        <button id="upgrade1" onclick="buyUpgrade(1)">Upgrade 1 (10 buttons)</button>
-        <button id="upgrade2" onclick="buyUpgrade(2)">Upgrade 2 (50 buttons)</button>
-        <button id="upgrade3" onclick="buyUpgrade(3)">Upgrade 3 (100 buttons)</button>
-    </div>
+    <div id="gameOver">Game Over!</div>
 
     <script>
-        let buttonCount = 0;
-        let clickValue = 1;
-        let clickRate = 1000; // milliseconds
-        let upgradeCost = {
-            1: 10,
-            2: 50,
-            3: 100
-        };
-        let upgradeSpeed = {
-            1: 500, // Reduce click rate by 500ms for upgrade 1
-            2: 300, // Reduce click rate by 300ms for upgrade 2
-            3: 100 // Reduce click rate by 100ms for upgrade 3
-        };
-        let currentUpgrade = 0;
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const carWidth = 40;
+        const carHeight = 60;
+        let carX = canvas.width / 2 - carWidth / 2;
+        let carY = canvas.height - carHeight - 10;
+        let speed = 0;
+        let obstacles = [];
+        let gameOver = false;
 
-        document.getElementById('clickButton').addEventListener('click', () => {
-            buttonCount += clickValue;
-            document.getElementById('buttonCount').innerText = `Buttons: ${buttonCount}`;
-        });
+        document.getElementById('gasButton').onclick = () => {
+            speed += 0.1; // Increase speed
+        };
+        document.getElementById('brakeButton').onclick = () => {
+            speed = Math.max(0, speed - 0.1); // Reduce speed, cannot go below 0
+        };
+        document.getElementById('leftButton').onclick = () => {
+            carX = Math.max(0, carX - 15); // Move left
+        };
+        document.getElementById('rightButton').onclick = () => {
+            carX = Math.min(canvas.width - carWidth, carX + 15); // Move right
+        };
 
-        function buyUpgrade(upgrade) {
-            if (buttonCount >= upgradeCost[upgrade]) {
-                buttonCount -= upgradeCost[upgrade];
-                currentUpgrade++;
-                clickRate -= upgradeSpeed[upgrade];
-                adjustClickRate();
-                document.getElementById('buttonCount').innerText = `Buttons: ${buttonCount}`;
-            } else {
-                alert("Not enough buttons!");
+        function drawCar() {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(carX, carY, carWidth, carHeight);
+        }
+
+        function createObstacle() {
+            const obstacleX = Math.random() * (canvas.width - 40);
+            obstacles.push({ x: obstacleX, y: 0 });
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = 'red';
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x, obstacle.y, 40, 40);
+            });
+        }
+
+        function updateObstacles() {
+            obstacles.forEach(obstacle => {
+                obstacle.y += speed * 2; // Move down based on speed
+            });
+            if (obstacles.length && obstacles[0].y > canvas.height) {
+                obstacles.shift(); // Remove obstacles that are off-screen
             }
         }
 
-        function adjustClickRate() {
-            clearInterval(autoClick);
-            autoClick = setInterval(() => {
-                buttonCount += clickValue;
-                document.getElementById('buttonCount').innerText = `Buttons: ${buttonCount}`;
-            }, clickRate);
+        function detectCollision() {
+            obstacles.forEach(obstacle => {
+                if (carX < obstacle.x + 40 && carX + carWidth > obstacle.x && carY < obstacle.y + 40 && carY + carHeight > obstacle.y) {
+                    gameOver = true;
+                    document.getElementById('gameOver').style.display = 'block';
+                }
+            });
         }
 
-        let autoClick = setInterval(() => {
-            buttonCount += clickValue;
-            document.getElementById('buttonCount').innerText = `Buttons: ${buttonCount}`;
-        }, clickRate);
+        function gameLoop() {
+            if (gameOver) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCar();
+            drawObstacles();
+            updateObstacles();
+            detectCollision();
+            requestAnimationFrame(gameLoop);
+        }
+
+        setInterval(createObstacle, 1000); // Create a new obstacle every second
+        gameLoop(); // Start the game loop
     </script>
 </body>
 </html>
