@@ -3,147 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Car Rush Game</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #87CEEB;
-            font-family: Arial, sans-serif;
-        }
-        #gameCanvas {
-            border: 2px solid #000;
-            display: block;
-            margin: 20px auto;
-            background: url('https://example.com/road-background.jpg') no-repeat center center; /* Add your road image */
-            background-size: cover;
-        }
-        #controls {
-            text-align: center;
-            margin-top: 10px;
-        }
-        button {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background: #4CAF50;
-            color: white;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: #45a049;
-        }
-        #gameOver {
-            display: none;
-            text-align: center;
-            font-size: 24px;
-            color: red;
-        }
-        #steeringWheel {
-            width: 100px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Papa Shot Doggeria Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="600"></canvas>
-    <div id="controls">
-        <div id="steeringContainer">
-            <img id="steeringWheel" src="https://images.app.goo.gl/RArkdCzqAjPznucA8" alt="Steering Wheel" />
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div class="scoreboard">
+            <h2>Score: <span id="score">0</span></h2>
+            <button id="startButton">Start Game</button>
         </div>
-        <button id="gasButton">Gas</button>
-        <button id="brakeButton">Brake</button>
-        <button id="leftButton">Left</button>
-        <button id="rightButton">Right</button>
     </div>
-    <div id="gameOver">Game Over!</div>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const carWidth = 40;
-        const carHeight = 60;
-        let carX = canvas.width / 2 - carWidth / 2;
-        let carY = canvas.height - carHeight - 10;
-        let speed = 0;
-        let obstacles = [];
-        let gameOver = false;
-
-        // Event listeners for steering wheel and directional buttons
-        document.getElementById('steeringWheel').onclick = () => {
-            speed = Math.min(speed + 0.2, 5); // Increase speed with limit
-        };
-        
-        document.getElementById('brakeButton').onclick = () => {
-            speed = Math.max(0, speed - 0.1); // Reduce speed, cannot go below 0
-        };
-
-        document.getElementById('leftButton').onclick = () => {
-            carX = Math.max(0, carX - 15); // Move left
-        };
-        
-        document.getElementById('rightButton').onclick = () => {
-            carX = Math.min(canvas.width - carWidth, carX + 15); // Move right
-        };
-
-        // Function to draw the car
-        function drawCar() {
-            ctx.fillStyle = 'blue';
-            ctx.fillRect(carX, carY, carWidth, carHeight);
-        }
-
-        // Function to create obstacles
-        function createObstacle() {
-            const obstacleX = Math.random() * (canvas.width - 40);
-            obstacles.push({ x: obstacleX, y: 0 });
-        }
-
-        // Function to draw obstacles
-        function drawObstacles() {
-            ctx.fillStyle = 'red';
-            obstacles.forEach(obstacle => {
-                ctx.fillRect(obstacle.x, obstacle.y, 40, 40);
-            });
-        }
-
-        // Function to update obstacle positions
-        function updateObstacles() {
-            obstacles.forEach(obstacle => {
-                obstacle.y += speed; // Move down based on speed
-            });
-            if (obstacles.length && obstacles[0].y > canvas.height) {
-                obstacles.shift(); // Remove obstacles that are off-screen
-            }
-        }
-
-        // Function to detect collisions
-        function detectCollision() {
-            obstacles.forEach(obstacle => {
-                if (carX < obstacle.x + 40 && carX + carWidth > obstacle.x && carY < obstacle.y + 40 && carY + carHeight > obstacle.y) {
-                    gameOver = true;
-                    document.getElementById('gameOver').style.display = 'block';
-                }
-            });
-        }
-
-        // Main game loop
-        function gameLoop() {
-            if (gameOver) return;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawCar();
-            drawObstacles();
-            updateObstacles();
-            detectCollision();
-            requestAnimationFrame(gameLoop);
-        }
-
-        // Set interval to create new obstacles
-        setInterval(createObstacle, 1000); // Create a new obstacle every second
-        gameLoop(); // Start the game loop
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
