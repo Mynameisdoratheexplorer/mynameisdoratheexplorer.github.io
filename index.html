@@ -1,121 +1,103 @@
+Sure! Below is a simple implementation of a classic game called "Guess the Number" using HTML, CSS, and JavaScript. You can copy and paste this code into an HTML file and open it in a web browser to play the game.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Early Birthday Obaid!</title>
+    <title>Guess the Number Game</title>
     <style>
         body {
-            margin: 0;
-            height: 100vh;
-            background: url('https://raw.githubusercontent.com/Mynameisdoratheexplorer/mynameisdoratheexplorer.github.io/main/IMG_1060.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        h1 {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
             text-align: center;
-            font-size: 5em;
-            color: white;
-            margin-top: 50px;
-            text-shadow: 2px 2px 5px black;
+            padding: 50px;
         }
-        
-        .button {
-            display: inline-block;
-            padding: 20px 40px;
-            margin: 20px;
-            font-size: 24px;
-            color: white;
-            background-color: red;
-            border: none;
-            border-radius: 12px;
+        h1 {
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            transition: background-color 0.3s, transform 0.3s;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
         }
-        
-        .button:hover {
-            background-color: darkred;
-            transform: scale(1.05);
+        button:hover {
+            background-color: #45a049;
         }
-        
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: drift 60s linear infinite;
-            z-index: 1;
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #d9534f;
         }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.5);
-            animation: waves-animation 1.5s infinite linear;
-        }
-
-        @keyframes drift {
-            0% { transform: translateX(-200px); }
-            100% { transform: translateX(100vw); }
-        }
-
-        @keyframes waves-animation {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(5px); }
-            100% { transform: translateY(0); }
-        }
-
-        .rain {
-            position: absolute;
-            width: 2px;
-            height: 20px;
-            background: blue;
-            bottom: 100%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+        .reset {
+            margin-top: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <h1>HABBY EARLY BIRTHDAY OBAID</h1>
-    
-    <button class="button">Press Me</button>
-    <button class="button">Click Me</button>
-    <button class="button">Surprise!</button>
+    <h1>Guess the Number Game</h1>
+    <p>I'm thinking of a number between 1 and 100. Try to guess it!</p>
+    <input type="number" id="guess" placeholder="Enter your guess" min="1" max="100">
+    <button onclick="checkGuess()">Guess</button>
+    <div class="result" id="result"></div>
+    <button class="reset" onclick="resetGame()">Play Again!</button>
 
-    <!-- Clouds -->
-    <div class="cloud" style="width: 100px; height: 100px; top: 50px; left: 0;"></div>
-    <div class="cloud" style="width: 150px; height: 70px; top: 100px; left: 200px;"></div>
-    <div class="cloud" style="width: 120px; height: 80px; top: 200px; left: 400px;"></div>
-
-    <!-- Waves -->
-    <div class="wave"></div>
-
-    <!-- Rain -->
     <script>
-        function createRaindrop() {
-            let raindrop = document.createElement('div');
-            raindrop.className = 'rain';
-            raindrop.style.left = Math.random() * window.innerWidth + 'px';
-            document.body.appendChild(raindrop);
-            setTimeout(() => raindrop.remove(), 2000);
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guessInput = document.getElementById('guess');
+            const resultDiv = document.getElementById('result');
+            const guess = Number(guessInput.value);
+            attempts++;
+
+            if (guess < 1 || guess > 100) {
+                resultDiv.textContent = "Please enter a number between 1 and 100.";
+            } else if (guess < randomNumber) {
+                resultDiv.textContent = "Too low! Try again.";
+            } else if (guess > randomNumber) {
+                resultDiv.textContent = "Too high! Try again.";
+            } else {
+                resultDiv.textContent = `Congratulations! You've guessed the number ${randomNumber} in ${attempts} attempts!`;
+                document.querySelector(".reset").style.display = "inline";
+            }
+
+            guessInput.value = '';
+            guessInput.focus();
         }
 
-        setInterval(createRaindrop, 100);
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('result').textContent = '';
+            document.querySelector(".reset").style.display = "none";
+            document.getElementById('guess').value = '';
+            document.getElementById('guess').focus();
+        }
     </script>
 
 </body>
 </html>
+```
+
+### How to Play:
+
+1. Copy the above code and paste it into a text editor.
+2. Save the file with a name like `guess_the_number.html`.
+3. Open that file in a web browser.
+4. Follow the on-screen instructions to guess a number between 1 and 100.
+
+This simple web game gives feedback on each guess and tracks the number of attempts you take. Once you guess correctly, you have the option to play again! Enjoy!
