@@ -3,17 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papa Shot Doggeria Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Simple Strategy Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #e0e0e0;
+            display: block;
+            margin: 0 auto;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #gameInfo {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <canvas id="gameCanvas"></canvas>
-        <div class="scoreboard">
-            <h2>Score: <span id="score">0</span></h2>
-            <button id="startButton">Start Game</button>
-        </div>
+    <h1 style="text-align:center;">Simple Strategy Game</h1>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div class="controls">
+        <button id="startButton">Start Game</button>
+        <div id="gameInfo">Score: <span id="score">0</span></div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let score = 0;
+        let isGameRunning = false;
+
+        document.getElementById('startButton').addEventListener('click', startGame);
+
+        function startGame() {
+            score = 0;
+            isGameRunning = true;
+            document.getElementById('score').innerText = score;
+            gameLoop();
+        }
+
+        function gameLoop() {
+            if (!isGameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawScore();
+            // Here you can add more game logic, like drawing game elements
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        function drawScore() {
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 30);
+        }
+
+        // Example: Increase score over time
+        setInterval(() => {
+            if (isGameRunning) {
+                score++;
+                document.getElementById('score').innerText = score;
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
