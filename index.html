@@ -3,14 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catch the Falling Objects Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Best Friend Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <div id="gameArea">
-        <div id="player"></div>
-        <div id="score">Score: 0</div>
-    </div>
-    <script src="script.js"></script>
+
+<h1>Best Friend Survey</h1>
+<form id="surveyForm">
+    <label for="name">What is your name?</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="bfName">What is your best friend's name?</label>
+    <input type="text" id="bfName" name="bfName" required>
+
+    <label for="howDidYouMeet">How did you meet your best friend?</label>
+    <textarea id="howDidYouMeet" name="howDidYouMeet" rows="4" required></textarea>
+
+    <label for="favoriteMemory">What is your favorite memory with them?</label>
+    <textarea id="favoriteMemory" name="favoriteMemory" rows="4" required></textarea>
+
+    <label for="bestQuality">What is the best quality of your best friend?</label>
+    <input type="text" id="bestQuality" name="bestQuality" required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById('surveyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Thank you for participating in the Best Friend Survey!');
+        this.reset();
+    });
+</script>
+
 </body>
 </html>
